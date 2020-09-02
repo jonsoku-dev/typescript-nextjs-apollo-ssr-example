@@ -6,7 +6,7 @@ $ npx create-next-app --example with-typescript graphql-nextjs-typescript
 # yarn add
 ## Dev Dependencies
 ```bash
-$ yarn add -D @graphql-codegen/cli @graphql-codegen/fragment-matcher @graphql-codegen/typescript @graphql-codegen/typescript-operations @graphql-codegen/typescript-react-apollo @types/graphql @types/node @types/react @types/react-dom @types/styled-components @typescript-eslint/eslint-plugin @typescript-eslint/parser babel-plugin-styled-components eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-react graphql-codegen-typescript-operations prettier typescript
+$ yarn add -D @graphql-codegen/cli @graphql-codegen/fragment-matcher @graphql-codegen/typescript @graphql-codegen/typescript-operations @graphql-codegen/typescript-react-apollo @types/graphql @types/node @types/react @types/react-dom @types/styled-components @typescript-eslint/eslint-plugin @typescript-eslint/parser babel-plugin-styled-components eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-react graphql-codegen-typescript-operations babel-plugin-styled-components prettier typescript
 ```
 ## Dependencies
 ```bash
@@ -18,7 +18,16 @@ $ yarn add @apollo/client apollo-link-context apollo-link-error graphql next rea
 ```json
 {
   "presets": ["next/babel"],
-  "plugins": [["styled-components", { "ssr": true }]]
+  "plugins": [
+    [
+      "babel-plugin-styled-components",
+      {
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false
+      }
+    ]
+  ]
 }
 ```
 ## .eslintrc.js
