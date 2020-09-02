@@ -1,41 +1,116 @@
-# TypeScript Next.js example
-
-This is a really simple project that shows the usage of Next.js with TypeScript.
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/next.js/tree/canary/examples/with-typescript)
-
-## How to use it?
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
+# Create Project
 ```bash
-npx create-next-app --example with-typescript with-typescript-app
-# or
-yarn create next-app --example with-typescript with-typescript-app
+$ npx create-next-app --example with-typescript graphql-nextjs-typescript
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/import?filter=next.js&utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-## Notes
-
-This example shows how to integrate the TypeScript type system into Next.js. Since TypeScript is supported out of the box with Next.js, all we have to do is to install TypeScript.
-
+# yarn add
+## Dev Dependencies
+```bash
+$ yarn add -D @graphql-codegen/cli @graphql-codegen/fragment-matcher @graphql-codegen/typescript @graphql-codegen/typescript-operations @graphql-codegen/typescript-react-apollo @types/graphql @types/node @types/react @types/react-dom @types/styled-components @typescript-eslint/eslint-plugin @typescript-eslint/parser babel-plugin-styled-components eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-react graphql-codegen-typescript-operations prettier typescript
 ```
-npm install --save-dev typescript
-```
-
-To enable TypeScript's features, we install the type declarations for React and Node.
-
-```
-npm install --save-dev @types/react @types/react-dom @types/node
+## Dependencies
+```bash
+$ yarn add @apollo/client apollo-link-context apollo-link-error graphql next react react-dom styled-components
 ```
 
-When we run `next dev` the next time, Next.js will start looking for any `.ts` or `.tsx` files in our project and builds it. It even automatically creates a `tsconfig.json` file for our project with the recommended settings.
+# rc
+## .babelrc
+```json
+{
+  "presets": ["next/babel"],
+  "plugins": [["styled-components", { "ssr": true }]]
+}
+```
+## .eslintrc.js
+```js
+module.exports = {
+    parser: "@typescript-eslint/parser", // Specifies the ESLint parser
+    parserOptions: {
+        ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
+        sourceType: "module", // Allows for the use of imports
+        ecmaFeatures: {
+            jsx: true // Allows for the parsing of JSX
+        }
+    },
+    settings: {
+        react: {
+            version: "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+        }
+    },
+    plugins: [
+        "@typescript-eslint",
+        "prettier"
+    ],
+    extends: [
+        "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    rules: {
+        // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+        // e.g. "@typescript-eslint/explicit-function-return-type": "off",
+    },
+};
+```
 
-Next.js has built-in TypeScript declarations, so we'll get autocompletion for Next.js' modules straight away.
+## .prettierrc.js
+```js
+module.exports = {
+    semi: true,
+    trailingComma: "all",
+    singleQuote: true,
+    printWidth: 120,
+    tabWidth: 4
+};
+```
 
-A `type-check` script is also added to `package.json`, which runs TypeScript's `tsc` CLI in `noEmit` mode to run type-checking separately. You can then include this, for example, in your `test` scripts.
+# etc
+## codegen.yml
+```bash
+$ yarn graphql-codegen init
+```
+```yaml
+overwrite: true
+schema: "http://localhost:4000/graphql"
+documents: "graphql/**/!(*.local).graphql"
+generates:
+  generated/apolloComponents.tsx:
+    config:
+      noNamespaces: true
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+      - "fragment-matcher"
+
+```
+
+## tsconfig.json
+```json
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": ["dom", "es2017"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "esnext"
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts", "**/*.tsx"]
+}
+
+```
