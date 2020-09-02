@@ -97,6 +97,7 @@ generates:
 ```
 
 ## tsconfig.json
+https://www.to-r.net/media/styled-components-theme/
 ```json
 {
   "compilerOptions": {
@@ -106,7 +107,10 @@ generates:
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": ["dom", "es2017"],
+    "lib": [
+      "dom",
+      "es2017"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -116,10 +120,18 @@ generates:
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "typeRoots": [
+      "types",
+      "node_modules/@types"
+    ]
   },
-  "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }
-
 ```
